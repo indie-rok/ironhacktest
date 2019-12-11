@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Button, ButtonGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export default function MovieItem() {
   return (
@@ -13,7 +14,9 @@ export default function MovieItem() {
           4.2/5 <FontAwesomeIcon icon={faStar} />
         </Card.Subtitle>
         <ButtonGroup aria-label="Basic example">
-          <Button variant="primary">See details</Button>
+          <Link to="/filmDetail/3">
+            <Button variant="primary">See details</Button>
+          </Link>
           <Button variant="danger">Delete</Button>
         </ButtonGroup>
       </Card.Body>

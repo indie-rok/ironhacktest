@@ -1,10 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Menu from "./GeneralComponents/Menu";
 import LoginScreen from "./features/Sessions/Login";
 import SignUpScreen from "./features/Sessions/SignUp";
 import AllMoviesScreen from "./features/Movies/All";
 import DetailedMovieScreen from "./features/Movies/Detail";
+import NewMovie from "./features/Movies/NewMovie";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -30,6 +32,7 @@ class App extends React.Component {
             <Route path="/login" component={LoginScreen} />
             <Route path="/sign_up" component={SignUpScreen} />
             <Route>
+              <Menu />
               <LoggedInContainer />
             </Route>
           </Switch>
@@ -42,6 +45,7 @@ class App extends React.Component {
 const LoggedInContainer = () => (
   <div className="inside-app-container">
     <Route path="/films" component={AllMoviesScreen} />
+    <Route path="/newFilm" component={NewMovie} />
     <Route path="/filmDetail/:filmId" component={DetailedMovieScreen} />
   </div>
 );
