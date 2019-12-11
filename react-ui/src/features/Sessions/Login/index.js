@@ -6,7 +6,7 @@ export default class Login extends Component {
   render() {
     return (
       <Container>
-        <Form clas>
+        <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
@@ -22,7 +22,7 @@ export default class Login extends Component {
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Submit
+            <Link to="/films">Submit</Link>
           </Button>
         </Form>
       </Container>
