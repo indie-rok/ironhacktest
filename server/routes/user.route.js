@@ -8,7 +8,8 @@ router.get("/user/current", auth, async (req, res) => {
   res.send(req.user);
 });
 
-router.get("/user", async (req, res) => {
+router.post("/session", async (req, res) => {
+  console.log("heello here", req.body);
   const user = await User.findOne({
     email: req.body.email,
     password: req.body.password

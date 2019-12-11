@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
+
 const usersRoute = require("./routes/user.route");
 
 const app = express();
@@ -20,12 +21,6 @@ mongoose
   .catch(err => console.error("Could not connect to MongoDB...", err));
 
 app.use(express.json());
-
-// API
-app.get("/api", function(req, res) {
-  res.set("Content-Type", "application/json");
-  res.send('{"message":"Hello from the custom server!"}');
-});
 
 app.use("/api", usersRoute);
 

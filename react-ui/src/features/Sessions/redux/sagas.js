@@ -1,5 +1,5 @@
 import { all, takeLatest, put, call } from "redux-saga/effects";
-import * as NavigationService from "../../../navigator/NavigationService";
+// import { push } from "react-router-dom";
 
 import {
   EMAIL_AUTH_LOGIN_REQUEST,
@@ -13,8 +13,8 @@ import {
 import { request } from "../../../utils/http";
 
 function sendLogin({ email, password }) {
-  return request.post("/api/v1/login/", {
-    username: email,
+  return request.post("/api/session/", {
+    email,
     password
   });
 }
@@ -37,17 +37,18 @@ function* handleLogin(action) {
   const {
     user: { email, password }
   } = action;
+
   try {
     const { status, data } = yield call(sendLogin, { email, password });
 
     if (status === 200) {
       yield put({
         type: EMAIL_AUTH_LOGIN_SUCCESS,
-        accessToken: data.token
+        accessToken: data.accessToken
       });
 
       // you can change the navigate for navigateAndResetStack to go to a protected route
-      NavigationService.navigate("ProtectedRoute");
+      // push("/films");
     } else {
       yield put({
         type: EMAIL_AUTH_LOGIN_ERROR,
@@ -56,6 +57,7 @@ function* handleLogin(action) {
     }
   } catch (error) {
     // todo add errors with similar structure in backend
+    console.log(error.message);
     yield put({
       type: EMAIL_AUTH_LOGIN_ERROR,
       error: "Can't sign in with provided credentials"
@@ -77,7 +79,7 @@ function* handleSignUp(action) {
       });
 
       // you can change the navigate for navigateAndResetStack to go to a protected route
-      NavigationService.navigate("ConfirmationRequired");
+      // push("/films");
     } else {
       yield put({
         type: EMAIL_AUTH_SIGNUP_ERROR,
