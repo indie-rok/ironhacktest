@@ -6,6 +6,9 @@ const usersRoute = require("./routes/user.route");
 
 const app = express();
 
+const isDev = process.env.NODE_ENV !== "production";
+const PORT = process.env.PORT || 5000;
+
 // Priority serve any static files.
 app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
 

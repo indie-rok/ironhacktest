@@ -23,15 +23,16 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 3,
     maxlength: 255
+  },
+  accessToken: {
+    type: String,
+    required: true
   }
 });
 
 //custom method to generate authToken
 UserSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign(
-    { _id: this._id, isAdmin: this.isAdmin },
-    config.get("myprivatekey")
-  ); //get the private key from the config file -> environment variable
+  //get the private key from the config file -> environment variable
   return token;
 };
 
