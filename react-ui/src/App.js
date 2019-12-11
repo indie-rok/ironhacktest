@@ -1,5 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider as ReduxProvider } from "react-redux";
+
+import { store } from "./redux/store";
 
 import Menu from "./GeneralComponents/Menu";
 import LoginScreen from "./features/Sessions/Login";
@@ -25,19 +28,21 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route path="/" exact component={LoginScreen} />
-            <Route path="/login" component={LoginScreen} />
-            <Route path="/sign_up" component={SignUpScreen} />
-            <Route>
-              <Menu />
-              <LoggedInContainer />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+      <ReduxProvider store={store}>
+        <Router>
+          <div className="App">
+            <Switch>
+              <Route path="/" exact component={LoginScreen} />
+              <Route path="/login" component={LoginScreen} />
+              <Route path="/sign_up" component={SignUpScreen} />
+              <Route>
+                <Menu />
+                <LoggedInContainer />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </ReduxProvider>
     );
   }
 }

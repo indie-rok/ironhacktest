@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default class Login extends Component {

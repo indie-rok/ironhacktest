@@ -10,7 +10,7 @@ export default function DetailedMovie() {
       <Container>
         <img
           src="https://picsum.photos/100/200"
-          alt="cover image"
+          alt="cover movie"
           className="mb-4"
         />
 
