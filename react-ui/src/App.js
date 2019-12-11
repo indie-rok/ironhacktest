@@ -1,72 +1,49 @@
-import React, { useCallback, useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import LoginScreen from "./features/Sessions/Login";
+import SignUpScreen from "./features/Sessions/SignUp";
+import AllMoviesScreen from "./features/Movies/All";
+import DetailedMovieScreen from "./features/Movies/Detail";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-function App() {
-  const [message, setMessage] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
-  const [url, setUrl] = useState("/api");
+class App extends React.Component {
+  async componentDidMount() {
+    // todo, move api conections to saga
+    let res;
+    try {
+      res = await fetch("/api");
+      console.log(await res.json());
+    } catch (err) {
+      console.log("err");
+    }
+  }
 
-  const fetchData = useCallback(() => {
-    fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(json => {
-        setMessage(json.message);
-        setIsFetching(false);
-      })
-      .catch(e => {
-        setMessage(`API call failed: ${e}`);
-        setIsFetching(false);
-      });
-  }, [url]);
-
-  useEffect(() => {
-    setIsFetching(true);
-    fetchData();
-  }, [fetchData]);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {process.env.NODE_ENV === "production" ? (
-          <p>This is a production build from create-react-app.</p>
-        ) : (
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-        )}
-        <p>
-          {"« "}
-          <strong>{isFetching ? "Fetching message from API" : message}</strong>
-          {" »"}
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://github.com/mars/heroku-cra-node"
-          >
-            React + Node deployment on Heroku
-          </a>
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
-  );
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={LoginScreen} />
+            <Route path="/login" component={LoginScreen} />
+            <Route path="/sign_up" component={SignUpScreen} />
+            <Route>
+              <LoggedInContainer />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
+
+const LoggedInContainer = () => (
+  <div className="inside-app-container">
+    <Route path="/films" component={AllMoviesScreen} />
+    <Route path="/filmDetail/:filmId" component={DetailedMovieScreen} />
+  </div>
+);
 
 export default App;
