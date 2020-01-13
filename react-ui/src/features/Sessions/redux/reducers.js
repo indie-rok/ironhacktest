@@ -8,7 +8,6 @@ const initialState = {
 export const EmailAuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.EMAIL_AUTH_LOGIN_SUCCESS:
-      console.log(action);
       return { ...state, user: action.user };
     case actions.EMAIL_AUTH_LOGIN_ERROR:
       return { ...state, errors: { SignIn: action.error } };

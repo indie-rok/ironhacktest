@@ -19,10 +19,11 @@ function sendLogin({ email, password }) {
   });
 }
 
-function sendSignUp({ email, password }) {
-  return request.post("/api/v1/signup/", {
+function sendSignUp({ email, password, name }) {
+  return request.post("/api/user/", {
     email,
-    password
+    password,
+    name
   });
 }
 
@@ -59,11 +60,10 @@ function* handleLogin(action) {
 
 function* handleSignUp(action) {
   const {
-    user: { email, password }
+    user: { email, password, name }
   } = action;
   try {
-    const { status, data } = yield call(sendSignUp, { email, password });
-
+    const { status, data } = yield call(sendSignUp, { email, password, name });
     if (status === 201) {
       yield put({
         type: EMAIL_AUTH_SIGNUP_SUCCESS,
