@@ -8,7 +8,7 @@ import * as emailAuthActions from "../redux/actions";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = { email: "indi3.rok@gmail.com", password: "123123" };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);

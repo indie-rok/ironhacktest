@@ -2,14 +2,14 @@ import * as actions from "./constants";
 
 const initialState = {
   user: null,
-  accessToken: null,
   errors: { SignIn: null, SignUp: null }
 };
 
 export const EmailAuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.EMAIL_AUTH_LOGIN_SUCCESS:
-      return { ...state, accessToken: action.accessToken };
+      console.log(action);
+      return { ...state, user: action.user };
     case actions.EMAIL_AUTH_LOGIN_ERROR:
       return { ...state, errors: { SignIn: action.error } };
     case actions.EMAIL_AUTH_SIGNUP_SUCCESS:

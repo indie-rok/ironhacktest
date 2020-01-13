@@ -16,7 +16,7 @@ router.post("/session", async (req, res) => {
   });
 
   if (user) {
-    return res.send({ accessToken: user.accessToken });
+    return res.send({ user });
   } else {
     return res
       .status(400)

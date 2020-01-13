@@ -16,7 +16,10 @@ app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
 //connect to mongodb
 
 mongoose
-  .connect(config.get("mongoUrl"), { useNewUrlParser: true })
+  .connect(
+    "mongodb+srv://indie-rok:Cheers2u@ironhack-test-rqer6.gcp.mongodb.net/test?retryWrites=true&w=majority",
+    { useNewUrlParser: true }
+  )
   .then(() => console.log("Connected to MongoDB..."))
   .catch(err => console.error("Could not connect to MongoDB...", err));
 
