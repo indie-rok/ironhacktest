@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
 
-import { store } from "./redux/store";
+import { store, history } from "./redux/store";
 
 import Menu from "./GeneralComponents/Menu";
 import LoginScreen from "./features/Sessions/Login";
@@ -29,7 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <ReduxProvider store={store}>
-        <Router>
+        <ConnectedRouter history={history}>
           <div className="App">
             <Switch>
               <Route path="/" exact component={LoginScreen} />
@@ -41,7 +42,7 @@ class App extends React.Component {
               </Route>
             </Switch>
           </div>
-        </Router>
+        </ConnectedRouter>
       </ReduxProvider>
     );
   }

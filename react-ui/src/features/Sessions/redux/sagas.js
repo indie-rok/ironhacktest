@@ -1,5 +1,5 @@
 import { all, takeLatest, put, call } from "redux-saga/effects";
-// import { push } from "react-router-dom";
+import { push } from "connected-react-router";
 
 import {
   EMAIL_AUTH_LOGIN_REQUEST,
@@ -70,22 +70,21 @@ function* handleSignUp(action) {
     user: { email, password }
   } = action;
   try {
-    const { status, data } = yield call(sendSignUp, { email, password });
+    // const { status, data } = yield call(sendSignUp, { email, password });
+    yield put(push("/films"));
 
-    if (status === 201) {
-      yield put({
-        type: EMAIL_AUTH_SIGNUP_SUCCESS,
-        user: data.user
-      });
-
-      // you can change the navigate for navigateAndResetStack to go to a protected route
-      // push("/films");
-    } else {
-      yield put({
-        type: EMAIL_AUTH_SIGNUP_ERROR,
-        error: "Unknown Error"
-      });
-    }
+    // if (status === 201) {
+    //   console.log('');
+    //   yield put({
+    //     type: EMAIL_AUTH_SIGNUP_SUCCESS,
+    //     user: data.user
+    //   });
+    // } else {
+    //   yield put({
+    //     type: EMAIL_AUTH_SIGNUP_ERROR,
+    //     error: "Unknown Error"
+    //   });
+    // }
   } catch (error) {
     // todo add errors with similar structure in backend
     yield put({
