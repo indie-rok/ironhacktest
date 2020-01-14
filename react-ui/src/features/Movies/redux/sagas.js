@@ -31,6 +31,12 @@ function getMovie(movieId, accessToken) {
   });
 }
 
+function addMovie(data, accessToken) {
+  return request.post(`/api/movies`, data.movie, {
+    headers: { "x-access-token": accessToken }
+  });
+}
+
 function* handleGetMovies() {
   try {
     const { status, data } = yield call(getMovies, yield select(getToken));
@@ -122,9 +128,35 @@ function* handleUpdateMovie(movie) {
   }
 }
 
+function* handleAddMovie(movie) {
+  try {
+    const { status, data } = yield call(
+      addMovie,
+      movie,
+      yield select(getToken)
+    );
+
+    if (status === 201) {
+      yield put({
+        type: actions.ADD_MOVIE_SUCCESS,
+        movie: data
+      });
+      yield put(push(`/films`));
+    } else {
+      yield put({
+        type: actions.ADD_MOVIE_ERROR,
+        error: "unknow error while adding this movie"
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default all([
   takeLatest(actions.GET_MOVIES_REQUEST, handleGetMovies),
   takeLatest(actions.DELETE_MOVIE_REQUEST, handleDeleteMovie),
   takeLatest(actions.GET_SINGLE_MOVIE_REQUEST, handleGetMovie),
-  takeLatest(actions.UPDATE_MOVIE_REQUEST, handleUpdateMovie)
+  takeLatest(actions.UPDATE_MOVIE_REQUEST, handleUpdateMovie),
+  takeLatest(actions.ADD_MOVIE_REQUEST, handleAddMovie)
 ]);

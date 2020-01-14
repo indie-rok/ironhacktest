@@ -17,17 +17,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 class App extends React.Component {
-  async componentDidMount() {
-    // todo, move api conections to saga
-    let res;
-    try {
-      res = await fetch("/api");
-      console.log(await res.json());
-    } catch (err) {
-      console.log("err");
-    }
-  }
-
   render() {
     return (
       <ReduxProvider store={store}>

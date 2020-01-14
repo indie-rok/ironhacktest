@@ -16,25 +16,26 @@ router.get("/movies", auth, async (req, res) => {
 });
 
 router.post("/movies", auth, async (req, res) => {
-  //   const { error } = validate(req.body);
-  //   if (error) return res.status(400).send({ msg: error.details[0].message });
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send({ msg: error.details[0].message });
 
-  let movie = new Movie({
-    name: `Kill Bill ${Date.now()}`,
-    image: "https://picsum.photos/200/100",
-    director: "manu",
-    release_date: "1233",
-    score: 1,
-    plot: "asd"
-  });
+  // let movie = new Movie({
+  //   name: `Kill Bill ${Date.now()}`,
+  //   image: "https://picsum.photos/200/100",
+  //   director: "manu",
+  //   release_date: "1233",
+  //   score: 1,
+  //   plot: "asd"
+  // });
+
+  let movie = new Movie(req.body);
 
   try {
     await movie.save();
+    return res.status(201).send({ movie });
   } catch (err) {
-    return res.status(400).send({ msg: "No movies available to show" });
+    return res.status(400).send({ msg: err.message });
   }
-
-  return res.status(201).send({ movie });
 });
 
 router.get("/movies/:movieId", auth, async (req, res) => {

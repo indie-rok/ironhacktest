@@ -18,3 +18,8 @@ export const deleteMovie = movieId => ({
   type: actions.DELETE_MOVIE_REQUEST,
   movieId
 });
+
+export const addMovie = movie => ({
+  type: actions.ADD_MOVIE_REQUEST,
+  movie
+});
