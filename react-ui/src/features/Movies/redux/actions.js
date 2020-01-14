@@ -9,6 +9,11 @@ export const getMovie = movieId => ({
   movieId
 });
 
+export const updateMovie = movie => ({
+  type: actions.UPDATE_MOVIE_REQUEST,
+  movie
+});
+
 export const deleteMovie = movieId => ({
   type: actions.DELETE_MOVIE_REQUEST,
   movieId

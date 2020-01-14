@@ -36,9 +36,9 @@ class DetailedMovie extends Component {
           <h5>Plot</h5>
           <p>{movie.plot}</p>
           <p>
-            <Button variant="warning">
-              <Link to={`/editMovie`}>Edit</Link>
-            </Button>
+            <Link to={`/editMovie/${movie._id}`}>
+              <Button variant="warning">Edit</Button>
+            </Link>
           </p>
         </Container>
       </div>

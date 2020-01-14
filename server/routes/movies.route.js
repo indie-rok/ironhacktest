@@ -57,12 +57,11 @@ router.delete("/movies/:movieId", auth, async (req, res) => {
 });
 
 router.patch("/movies/:movieId", auth, async (req, res) => {
+  let movie;
+
   try {
-    await Movie.findOneAndUpdate(
-      { _id: req.params.movieId },
-      { name: `new name ${Date.now()}` }
-    );
-    return res.status(204);
+    movie = await Movie.findOneAndUpdate({ _id: req.params.movieId }, req.body);
+    return res.status(200).send(movie);
   } catch (err) {
     return res.status(400).send({ msg: `Error ${err}` });
   }

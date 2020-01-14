@@ -11,6 +11,7 @@ import SignUpScreen from "./features/Sessions/SignUp";
 import AllMoviesScreen from "./features/Movies/All";
 import DetailedMovieScreen from "./features/Movies/Detail";
 import NewMovie from "./features/Movies/NewMovie";
+import EditMovie from "./features/Movies/EditMovie";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -52,6 +53,7 @@ const LoggedInContainer = () => (
   <div className="inside-app-container">
     <Route path="/films" component={AllMoviesScreen} />
     <Route path="/newFilm" component={NewMovie} />
+    <Route path="/editMovie/:filmId" component={EditMovie} />
     <Route path="/filmDetail/:filmId" component={DetailedMovieScreen} />
   </div>
 );

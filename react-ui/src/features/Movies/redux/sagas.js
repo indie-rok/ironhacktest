@@ -19,6 +19,12 @@ function deleteMovie(movieId, accessToken) {
   });
 }
 
+function updateMovie(movie, accessToken) {
+  return request.patch(`/api/movies/${movie.movie.id}`, movie.movie, {
+    headers: { "x-access-token": accessToken }
+  });
+}
+
 function getMovie(movieId, accessToken) {
   return request.get(`/api/movies/${movieId}`, {
     headers: { "x-access-token": accessToken }
@@ -79,10 +85,6 @@ function* handleGetMovie({ movieId }) {
         type: actions.GET_SINGLE_MOVIE_SUCCESS,
         currentMovie: data
       });
-
-      console.log("movie xd", data);
-
-      yield put(push(`/filmDetail/${movieId}`));
     } else {
       yield put({
         type: actions.GET_SINGLE_MOVIE_ERROR,
@@ -94,8 +96,35 @@ function* handleGetMovie({ movieId }) {
   }
 }
 
+function* handleUpdateMovie(movie) {
+  try {
+    const { status, data } = yield call(
+      updateMovie,
+      movie,
+      yield select(getToken)
+    );
+
+    if (status === 200) {
+      yield put({
+        type: actions.UPDATE_MOVIE_SUCCESS,
+        movie: data
+      });
+
+      yield put(push(`/filmDetail/${movie.movie.id}`));
+    } else {
+      yield put({
+        type: actions.UPDATE_MOVIE_ERROR,
+        error: "unknow error while updating this movie"
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default all([
   takeLatest(actions.GET_MOVIES_REQUEST, handleGetMovies),
   takeLatest(actions.DELETE_MOVIE_REQUEST, handleDeleteMovie),
-  takeLatest(actions.GET_SINGLE_MOVIE_REQUEST, handleGetMovie)
+  takeLatest(actions.GET_SINGLE_MOVIE_REQUEST, handleGetMovie),
+  takeLatest(actions.UPDATE_MOVIE_REQUEST, handleUpdateMovie)
 ]);
