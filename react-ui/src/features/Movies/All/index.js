@@ -21,7 +21,7 @@ class AllMovies extends Component {
   }
 
   render() {
-    return <div>{this.renderMovies()}</div>;
+    return <>{this.renderMovies()}</>;
   }
 }
 

@@ -3,10 +3,12 @@ import { Card, Button, ButtonGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as movieActions from "../../redux/actions";
 
-export default function MovieItem({ name, image, score, _id }) {
+function MovieItem({ name, image, score, _id, actions }) {
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ margin: "10px", display: "inline-block", width: "18rem" }}>
       <Card.Img variant="top" src={image} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
@@ -17,7 +19,12 @@ export default function MovieItem({ name, image, score, _id }) {
           <Link to="/filmDetail/3">
             <Button variant="primary">See details</Button>
           </Link>
-          <Button variant="danger" data-delete-id={_id}>
+          <Button
+            variant="danger"
+            onClick={() => {
+              actions.deleteMovie(_id);
+            }}
+          >
             Delete
           </Button>
         </ButtonGroup>
@@ -25,3 +32,13 @@ export default function MovieItem({ name, image, score, _id }) {
     </Card>
   );
 }
+
+const mapDispatchToProps = dispatch => ({
+  actions: {
+    deleteMovie: movieId => {
+      dispatch(movieActions.deleteMovie(movieId));
+    }
+  }
+});
+
+export default connect(null, mapDispatchToProps)(MovieItem);
