@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 
+import PrivateRoute from "./GeneralComponents/PrivateRoute";
 import { store, history } from "./redux/store";
 
 import Menu from "./GeneralComponents/Menu";
@@ -40,10 +41,10 @@ class App extends React.Component {
 
 const LoggedInContainer = () => (
   <div className="inside-app-container">
-    <Route path="/films" component={AllMoviesScreen} />
-    <Route path="/newFilm" component={NewMovie} />
-    <Route path="/editMovie/:filmId" component={EditMovie} />
-    <Route path="/filmDetail/:filmId" component={DetailedMovieScreen} />
+    <PrivateRoute path="/films" component={AllMoviesScreen} />
+    <PrivateRoute path="/newFilm" component={NewMovie} />
+    <PrivateRoute path="/editMovie/:filmId" component={EditMovie} />
+    <PrivateRoute path="/filmDetail/:filmId" component={DetailedMovieScreen} />
   </div>
 );
 
