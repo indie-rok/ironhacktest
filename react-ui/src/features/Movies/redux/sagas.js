@@ -1,4 +1,5 @@
 import { all, takeLatest, put, call, select } from "redux-saga/effects";
+import { push } from "connected-react-router";
 
 import * as actions from "./constants";
 
@@ -14,6 +15,12 @@ function getMovies(accessToken) {
 
 function deleteMovie(movieId, accessToken) {
   return request.delete(`/api/movies/${movieId}`, {
+    headers: { "x-access-token": accessToken }
+  });
+}
+
+function getMovie(movieId, accessToken) {
+  return request.get(`/api/movies/${movieId}`, {
     headers: { "x-access-token": accessToken }
   });
 }
@@ -44,7 +51,6 @@ function* handleGetMovies() {
 
 function* handleDeleteMovie({ movieId }) {
   try {
-    console.log("movie id", movieId);
     const { status } = yield call(deleteMovie, movieId, yield select(getToken));
 
     if (status === 204) {
@@ -60,7 +66,36 @@ function* handleDeleteMovie({ movieId }) {
   }
 }
 
+function* handleGetMovie({ movieId }) {
+  try {
+    const { status, data } = yield call(
+      getMovie,
+      movieId,
+      yield select(getToken)
+    );
+
+    if (status === 200) {
+      yield put({
+        type: actions.GET_SINGLE_MOVIE_SUCCESS,
+        currentMovie: data
+      });
+
+      console.log("movie xd", data);
+
+      yield put(push(`/filmDetail/${movieId}`));
+    } else {
+      yield put({
+        type: actions.GET_SINGLE_MOVIE_ERROR,
+        error: "unknow error while getting this movie"
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default all([
   takeLatest(actions.GET_MOVIES_REQUEST, handleGetMovies),
-  takeLatest(actions.DELETE_MOVIE_REQUEST, handleDeleteMovie)
+  takeLatest(actions.DELETE_MOVIE_REQUEST, handleDeleteMovie),
+  takeLatest(actions.GET_SINGLE_MOVIE_REQUEST, handleGetMovie)
 ]);

@@ -1,41 +1,61 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-export default function DetailedMovie() {
-  return (
-    <div>
-      <Container>
-        <img
-          src="https://picsum.photos/100/200"
-          alt="cover movie"
-          className="mb-4"
-        />
+import * as movieActions from "../redux/actions";
 
-        <h6>
-          <small>Director:</small>Martin Scorcess
-        </h6>
-        <h6>
-          <small>Release Date</small> 10-12-2019
-        </h6>
-        <h6>
-          <small>Score</small> 4.2/5 <FontAwesomeIcon icon={faStar} />
-        </h6>
-        <h5>Plot</h5>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nihil
-          cumque voluptatibus, sint earum doloribus, ipsam quasi, sunt deserunt
-          eveniet facere obcaecati neque explicabo ipsa est id amet. Ducimus,
-          esse.
-        </p>
-        <p>
-          <Button variant="warning">
-            <Link>Edit</Link>
-          </Button>
-        </p>
-      </Container>
-    </div>
-  );
+class DetailedMovie extends Component {
+  componentDidMount() {
+    const { actions, match } = this.props;
+    actions.getMovie(match.params.filmId);
+  }
+
+  render() {
+    const { movie } = this.props;
+    return (
+      <div>
+        <Container>
+          <img src={movie.image} alt="cover movie" className="mb-4" />
+
+          <h3>{movie.name}</h3>
+          <h6>
+            <small>Director:</small>
+            {movie.director}
+          </h6>
+          <h6>
+            <small>Release Date</small>
+            {movie.release_date}
+          </h6>
+          <h6>
+            <small>Score</small> {movie.score}/5
+            <FontAwesomeIcon icon={faStar} />
+          </h6>
+          <h5>Plot</h5>
+          <p>{movie.plot}</p>
+          <p>
+            <Button variant="warning">
+              <Link to={`/editMovie`}>Edit</Link>
+            </Button>
+          </p>
+        </Container>
+      </div>
+    );
+  }
 }
+
+const mapStateToProps = state => {
+  return { movie: state.Movies.currentMovie };
+};
+
+const mapDispatchToProps = dispatch => ({
+  actions: {
+    getMovie: movieId => {
+      dispatch(movieActions.getMovie(movieId));
+    }
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailedMovie);

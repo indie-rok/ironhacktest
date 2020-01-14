@@ -22,6 +22,13 @@ export const MoviesReducer = (state = initialState, action) => {
         })
       };
 
+    case actions.GET_SINGLE_MOVIE_ERROR:
+      return { ...state, errors: { movies: action.error } };
+
+    case actions.GET_SINGLE_MOVIE_SUCCESS:
+      console.log("action", action);
+      return { ...state, currentMovie: action.currentMovie };
+
     default:
       return state;
   }

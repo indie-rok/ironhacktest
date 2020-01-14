@@ -16,7 +16,7 @@ function MovieItem({ name, image, score, _id, actions }) {
           {score}/5 <FontAwesomeIcon icon={faStar} />
         </Card.Subtitle>
         <ButtonGroup aria-label="Basic example">
-          <Link to="/filmDetail/3">
+          <Link to={`/filmDetail/${_id}`}>
             <Button variant="primary">See details</Button>
           </Link>
           <Button
