@@ -47,7 +47,6 @@ function* handleGetMovies() {
         movies: data.movies
       });
     } else {
-      console.log("error", status);
       yield put({
         type: actions.GET_MOVIES_ERROR,
         error: "Unknown Error while getting movies"

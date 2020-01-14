@@ -79,7 +79,6 @@ class Login extends Component {
           <Button
             variant="primary"
             onClick={() => {
-              console.log("here");
               this.submitLogin();
             }}
           >

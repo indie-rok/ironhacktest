@@ -67,15 +67,15 @@ function* handleSignUp(action) {
     if (status === 201) {
       yield put({
         type: EMAIL_AUTH_SIGNUP_SUCCESS,
-        user: data.user
+        user: data
       });
+      yield put(push("/films"));
     } else {
       yield put({
         type: EMAIL_AUTH_SIGNUP_ERROR,
         error: "Unknown Error"
       });
     }
-    yield put(push("/films"));
   } catch (error) {
     // todo add errors with similar structure in backend
     yield put({
