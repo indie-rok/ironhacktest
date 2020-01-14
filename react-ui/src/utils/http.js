@@ -14,7 +14,5 @@ export function setupHttpConfig() {
   request.defaults.baseURL = appConfig.emailAuthAPIEndPoint;
   request.defaults.timeout = appConfig.defaultTimeout;
   axios.defaults.headers["Content-Type"] = "application/json";
-  // todo add auth token from store
-
   // you can add more default values for http requests here
 }

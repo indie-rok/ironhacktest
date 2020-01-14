@@ -4,20 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-export default function MovieItem() {
+export default function MovieItem({ name, image, score, _id }) {
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src="https://picsum.photos/200/100" />
+      <Card.Img variant="top" src={image} />
       <Card.Body>
-        <Card.Title>Star Wars</Card.Title>
+        <Card.Title>{name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          4.2/5 <FontAwesomeIcon icon={faStar} />
+          {score}/5 <FontAwesomeIcon icon={faStar} />
         </Card.Subtitle>
         <ButtonGroup aria-label="Basic example">
           <Link to="/filmDetail/3">
             <Button variant="primary">See details</Button>
           </Link>
-          <Button variant="danger">Delete</Button>
+          <Button variant="danger" data-delete-id={_id}>
+            Delete
+          </Button>
         </ButtonGroup>
       </Card.Body>
     </Card>
