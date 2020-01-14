@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const config = require("config");
 
 const usersRoute = require("./routes/user.route");
+const moviesRoute = require("./routes/movies.route");
 
 const app = express();
 
@@ -26,6 +27,7 @@ mongoose
 app.use(express.json());
 
 app.use("/api", usersRoute);
+app.use("/api", moviesRoute);
 
 // All remaining requests return the React app, so it can handle routing.
 app.get("*", function(request, response) {

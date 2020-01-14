@@ -9,7 +9,6 @@ router.get("/user/current", auth, async (req, res) => {
 });
 
 router.post("/session", async (req, res) => {
-  console.log("heello here", req.body);
   const user = await User.findOne({
     email: req.body.email,
     password: req.body.password
@@ -25,11 +24,9 @@ router.post("/session", async (req, res) => {
 });
 
 router.post("/user", async (req, res) => {
-  // validate the request body first
   const { error } = validate(req.body);
   if (error) return res.status(400).send({ msg: error.details[0].message });
 
-  //find an existing user
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send({ msg: "User already registered." });
 
